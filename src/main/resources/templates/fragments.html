@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}">My Cheeses</title>
 
-    <link rel="stylesheet" th:href="@{css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
 
 </head>
@@ -13,7 +13,14 @@
 <nav th:fragment="navigation">
     <a href="/cheese">List</a>
     <a href="/cheese/add">Add Cheese</a>
+    <a href="/cheese/remove">Remove Cheese</a>
+    <br />
+    <hr />
 </nav>
+
+<err th:fragment="error">
+    <p class="error" th:text="${error}"></p>
+</err>
 
 </body>
 </html>
