@@ -1,12 +1,12 @@
 package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
+import org.launchcode.cheesemvc.models.CheeseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
 
 
@@ -14,14 +14,12 @@ import java.util.ArrayList;
 @RequestMapping("cheese")
 public class CheeseController {
 
-    static ArrayList<Cheese> cheeses = new ArrayList<>();
-
 
     // Request path is now /cheese
     @RequestMapping(value = "")
     public String index(Model model) {
 
-        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("cheeses", CheeseData.getAll());
         model.addAttribute("title", "My Cheeses");
 
         return "cheese/index";
@@ -44,7 +42,7 @@ public class CheeseController {
             return "cheese/add";
         }
         Cheese cheese = new Cheese(cheeseName, cheeseDescription);
-        cheeses.add(cheese);
+        CheeseData.add(cheese);
 
         //Redirect to /cheese
         return "redirect:";
@@ -53,23 +51,18 @@ public class CheeseController {
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveCheeseForm(Model model) {
 
-        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("cheeses", CheeseData.getAll());
         model.addAttribute("title", "Remove Cheese");
         return "cheese/remove";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCheeseForm(@RequestParam String cheeseName) {
+    public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
 
-        int index = 0;
-        for (Cheese cheese : cheeses) {
-            if (cheeseName.equals(cheese.getCheeseName())) {
-                index = cheeses.indexOf(cheese);
-            }
+        for (int cheeseId : cheeseIds) {
+            CheeseData.remove(cheeseId);
         }
-        cheeses.remove(index);
 
-        // Redirect to /cheese
         return "redirect:";
     }
 }
