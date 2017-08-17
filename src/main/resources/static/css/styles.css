@@ -1,0 +1,24 @@
+html {
+    font-family: Helvetica, sans-serif;
+}
+
+a {
+    padding-left: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.submit {
+    margin-left: 150px;
+}
+
+label {
+    text-align: right;
+    width: 270px;
+    display: inline-block;
+}
+
+.error {
+    color: darkred;
+    font-weight: bold;
+}
