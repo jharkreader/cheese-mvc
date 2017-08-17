@@ -4,10 +4,7 @@ import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -33,9 +30,12 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@RequestParam String cheeseName, @RequestParam String cheeseDescription, Model
-     model) {
+    public String processAddCheeseForm(@ModelAttribute Cheese newCheese) {
 
+        CheeseData.add(newCheese);
+
+        //Sample code demos model binding, keeping old code because it had input validation
+        /*
         if (cheeseName.equals("") || !cheeseName.matches("[a-zA-Z ]+")) {
 
             model.addAttribute("error", "Must have a valid cheese");
@@ -43,7 +43,7 @@ public class CheeseController {
         }
         Cheese cheese = new Cheese(cheeseName, cheeseDescription);
         CheeseData.add(cheese);
-
+                              */
         //Redirect to /cheese
         return "redirect:";
     }
@@ -65,4 +65,27 @@ public class CheeseController {
 
         return "redirect:";
     }
+
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+
+        Cheese editingCheese = CheeseData.getById(cheeseId);
+        model.addAttribute("cheese", editingCheese);
+
+
+        return "cheese/edit";
+
+    }
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(int cheeseId, String cheeseName, String cheeseDescription) {
+
+        Cheese editedCheese = CheeseData.getById(cheeseId);
+        editedCheese.setCheeseName(cheeseName);
+        editedCheese.setCheeseDescription(cheeseDescription);
+
+        return "redirect:";
+    }
+
 }
