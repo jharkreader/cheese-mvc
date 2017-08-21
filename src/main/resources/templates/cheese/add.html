@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:labelth="http://www.w3.org/1999/html">
 <head th:replace="fragments :: head"></head>
 
 <body>
@@ -9,9 +9,17 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post">
-    <label>Cheese:<input type="text" name="cheeseName" /></label>
-    <label>Description:<input type="text" name="cheeseDescription" /></label>
+<form method="post" th:object="${cheese}">
+    <label th:for="cheeseName">Cheese:<input th:field="*{cheeseName}" /></label>
+    <span th:errors="*{cheeseName}" class="error"></span>
+    <label th:for="cheeseDescription">Description:<input th:field="*{cheeseDescription}" /></label>
+    <span th:errors="*{cheeseDescription}" class="error"></span>
+    <label th:for="cheeseType">Type:</label>
+        <select th:field="*{cheeseType}">
+            <option th:each="cheeseType : ${cheeseTypes}"
+                    th:text="${cheeseType.name}"
+                    th:value="${cheeseType}"></option>
+        </select>
     <input type="submit" value="Add Cheese!" />
 </form>
 

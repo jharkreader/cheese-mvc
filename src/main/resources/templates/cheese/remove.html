@@ -6,15 +6,23 @@
 
 <h1 th:text="${title}">Default Title</h1>
 
+<err th:replace="fragments :: error"></err>
+
 <nav th:replace="fragments :: navigation"></nav>
 
 <p th:unless="${cheeses} and ${cheeses.size()}">No cheese to remove!</p>
 
 <form method="post">
-    <select name="cheeseName">
-        <option th:each="cheese : ${cheeses}" th:text="${cheese.key}"></option>
-    </select>
-    <input type="submit" value="Remove Cheese!" />
+
+    <div th:each="cheese : ${cheeses}" class="checkbox">
+        <input type="checkbox" name="cheeseIds" th:value="${cheese.cheeseId}" th:id="${cheese.cheeseId}"/>
+        <label th:for="${cheese.cheeseId}" th:text="${cheese.cheeseName}"></label>
+        <br />
+    </div>
+
+    <input type="submit" value="Remove Cheese" />
+
 </form>
+
 </body>
 </html>

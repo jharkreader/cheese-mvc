@@ -2,9 +2,13 @@ package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
+import org.launchcode.cheesemvc.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -26,24 +30,21 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
 
         model.addAttribute("title", "Add Cheese");
+        model.addAttribute(new Cheese());
+        model.addAttribute("cheeseTypes", CheeseType.values());
         return "cheese/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute Cheese newCheese) {
+    public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese, Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Cheese");
+            return "cheese/add";
+        }
 
         CheeseData.add(newCheese);
 
-        //Sample code demos model binding, keeping old code because it had input validation
-        /*
-        if (cheeseName.equals("") || !cheeseName.matches("[a-zA-Z ]+")) {
-
-            model.addAttribute("error", "Must have a valid cheese");
-            return "cheese/add";
-        }
-        Cheese cheese = new Cheese(cheeseName, cheeseDescription);
-        CheeseData.add(cheese);
-                              */
         //Redirect to /cheese
         return "redirect:";
     }
@@ -79,13 +80,19 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String cheeseName, String cheeseDescription) {
+    public String processEditForm(@ModelAttribute int cheeseId, @ModelAttribute @Valid String cheeseName, @ModelAttribute @Valid String cheeseDescription, Model model, Errors errors) {
+
+        if (errors.hasErrors()) {
+            Cheese editingCheese = CheeseData.getById(cheeseId);
+            model.addAttribute("cheese", editingCheese);
+            return "cheese/edit";
+        }
 
         Cheese editedCheese = CheeseData.getById(cheeseId);
         editedCheese.setCheeseName(cheeseName);
         editedCheese.setCheeseDescription(cheeseDescription);
 
-        return "redirect:";
+        return "redirect:/cheese";
     }
 
 }
