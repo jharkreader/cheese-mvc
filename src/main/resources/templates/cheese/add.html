@@ -20,6 +20,8 @@
                     th:text="${cheeseType.name}"
                     th:value="${cheeseType}"></option>
         </select>
+    <label th:for="cheeseRating">Rating:<input th:field="*{cheeseRating}" /></label>
+    <span th:errors="*{cheeseRating}" class="error"></span>
     <input type="submit" value="Add Cheese!" />
 </form>
 

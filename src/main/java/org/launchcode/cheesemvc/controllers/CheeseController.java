@@ -91,6 +91,8 @@ public class CheeseController {
         Cheese editedCheese = CheeseData.getById(editingCheese.getCheeseId());
         editedCheese.setCheeseName(editingCheese.getCheeseName());
         editedCheese.setCheeseDescription(editingCheese.getCheeseDescription());
+        editedCheese.setCheeseType(editingCheese.getCheeseType());
+        editedCheese.setCheeseRating(editingCheese.getCheeseRating());
 
         return "redirect:/cheese";
     }
