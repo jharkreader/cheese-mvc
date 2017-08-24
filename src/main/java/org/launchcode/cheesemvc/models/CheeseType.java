@@ -1,7 +1,5 @@
 package org.launchcode.cheesemvc.models;
 
-import javax.swing.*;
-
 public enum CheeseType {
 
     HARD ("Hard"),

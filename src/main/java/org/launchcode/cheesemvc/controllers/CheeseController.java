@@ -73,7 +73,7 @@ public class CheeseController {
 
         Cheese editingCheese = CheeseData.getById(cheeseId);
         model.addAttribute("cheese", editingCheese);
-
+        model.addAttribute("cheeseTypes", CheeseType.values());
 
         return "cheese/edit";
 
@@ -84,6 +84,7 @@ public class CheeseController {
 
         if (errors.hasErrors()) {
             model.addAttribute("cheese", editingCheese);
+            model.addAttribute("cheeseTypes", CheeseType.values());
             return "cheese/edit";
         }
 
