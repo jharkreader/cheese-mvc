@@ -5,16 +5,23 @@
 <h1>User Signup!</h1>
 <hr />
 <form method="post" th:object="${user}">
-    <div><label th:for="*{username}">Username:<input th:field="*{username}" th:value="${user.username}"/></label>
+    <div><label th:for="*{username}">Username:</label>
+        <input th:field="*{username}" th:value="${user.username}"/>
         <span th:errors="*{username}" class="error"></span>
     </div>
-    <div><label th:for="*{email}">Email:<input type="email" th:field="*{email}" th:value="${user.email}" /></label>
+    <div>
+        <label th:for="*{email}">Email:</label>
+            <input type="email" th:field="*{email}" th:value="${user.email}" />
         <span th:errors="*{email}" class="error"></span>
     </div>
-    <div><label th:for="*{password}">Password:<input type="password" th:field="*{password}" /></label>
+    <div>
+        <label th:for="*{password}">Password:</label>
+            <input type="password" th:field="*{password}" />
         <span th:errors="*{password}" class="error"></span>
     </div>
-    <div><label>Verify:<input type="password" name="verify" /></label>
+    <div>
+        <label>Verify:</label>
+            <input type="password" name="verify" />
         <span th:text="${passwordError}" class="error"></span>
     </div>
     <div><input class="submit" type="submit" value="Sign up!" /></div>
