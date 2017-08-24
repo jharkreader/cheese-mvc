@@ -9,13 +9,18 @@ a {
 }
 
 .submit {
-    margin-left: 150px;
+    margin-left: 250px;
 }
 
 label {
     text-align: right;
-    width: 270px;
+    width: 300px;
     display: inline-block;
+    padding-bottom: 10px;
+}
+
+select {
+    align-items: inherit;
 }
 
 .error {
