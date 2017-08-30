@@ -1,10 +1,18 @@
 package org.launchcode.cheesemvc.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Cheese {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     @NotNull
     @Size(min=3, max=15, message = "Cheese name must be between 3 and 13 letters.")
@@ -20,20 +28,17 @@ public class Cheese {
 
     private CheeseType cheeseType;
 
-    private int cheeseId;
-    private static int nextId = 1;
-
 
     public Cheese(String cheeseName, String cheeseDescription, String cheeseRating) {
-        this();
         this.cheeseName = cheeseName;
         this.cheeseDescription = cheeseDescription;
         this.cheeseRating = cheeseRating;
     }
 
-    public Cheese() {
-        cheeseId = nextId;
-        nextId++;
+    public Cheese() { }
+
+    public int getId() {
+        return id;
     }
 
     public String getCheeseName() {
@@ -50,14 +55,6 @@ public class Cheese {
 
     public void setCheeseDescription(String aCheeseDescription) {
         cheeseDescription = aCheeseDescription;
-    }
-
-    public int getCheeseId() {
-        return cheeseId;
-    }
-
-    public void setCheeseId(int cheeseId) {
-        this.cheeseId = cheeseId;
     }
 
     public CheeseType getCheeseType() {
